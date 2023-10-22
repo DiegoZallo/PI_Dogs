@@ -11,7 +11,7 @@ module.exports = (sequelize) => {
     name: {
       type: DataTypes.STRING,
       allowNull: false,},
-    image: {type: DataTypes.STRING,
+    image: {type: DataTypes.ARRAY(DataTypes.STRING),
             allowNull:false},
     height:{type: DataTypes.STRING,
             allowNull: false},
