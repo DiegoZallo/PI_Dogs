@@ -7,7 +7,7 @@ const h_getDogsByName = async(name, dogs)=>{
         });
         return dogs
     }else{
-        throw Error({error: 'There is no dog matching the Name search criteria'})
+        throw Error('There is no dog matching the Name search criteria')
     }
 };
 
