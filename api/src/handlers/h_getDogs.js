@@ -1,5 +1,5 @@
 const axios = require('axios');
-const {Dog} = require('../db');
+const {Dog, Temperament} = require('../db');
 
 //get the api key from .env file
 require('dotenv').config();
@@ -16,13 +16,34 @@ const h_getDogs = async () => {
             return dog = {...dog, 
                 weight: dog.weight.metric, 
                 height: dog.height.metric, 
-                image: dog.image.url}
+                image: dog.image.url,
+                temperament: dog.temperament?.split(', ')
+            }
         });
 
-        const dogsDb = await Dog.findAll();
-        const dogs = [...dogsApi, ...dogsDb];
+        let dogsDb = await Dog.findAll({
+            include:{model: Temperament}});
 
-        return dogs
+        if(!dogsDb) throw Error ("The was an error retreiving the data from the DB request");
+        
+        dogsDb = dogsDb?.map((dog)=>{
+            let auxTemp = dog.temperaments?.map((temp)=>temp.name)
+            
+            let dogs ={
+                weight: dog.weight,
+                height: dog.height,
+                id: dog.id,
+                name: dog.name,
+                life_span: dog.life_span,
+                temperament: auxTemp,
+                image: dog.image}
+                
+            return dogs
+        })
+        
+        const resDogs = [...dogsApi, ...dogsDb];
+
+        return resDogs
 
     }else{
         throw Error ("The was an error retreiving the data from the api request");

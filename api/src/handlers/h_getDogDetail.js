@@ -25,18 +25,33 @@ const h_getDogDetail = async (idRaza) => {
         const dogsApi = {...data[0], 
             weight: data[0].weight.metric, 
             height: data[0].height.metric, 
-            image: data[0].image.url
+            image: data[0].image.url,
+            temperament: data[0].temperament.split(', ')
         }
     
         return dogsApi
     }else{
-        const dogsDb = await Dog.findOne(
-            {where: {id: idRaza},
-             include:{model: Temperament}                             });
-        if(!Dog){
+
+        let dogsDb = await Dog.findByPk(idRaza,
+            {include: Temperament});
+
+        if(!dogsDb){
             throw Error('We couldn´t find dog information')
         }
-        return dogsDb
+        const auxTemp = dogsDb.temperaments.map((temp)=>temp.name)
+        
+        const dogs ={
+            weight: dogsDb.weight,
+            height: dogsDb.height,
+            id: dogsDb.id,
+            name: dogsDb.name,
+            life_span: dogsDb.life_span,
+            temperament: auxTemp,
+            image: dogsDb.image
+        }
+        
+
+        return dogs
     }
  };
   

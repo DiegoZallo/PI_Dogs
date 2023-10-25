@@ -26,7 +26,8 @@ const h_getTemperaments = async () => {
             }
         });
 
-        return await Temperament.findAll()  
+        return await temList  
+        // return await Temperament.findAll()  
 
     }else{
         throw Error ("The was an error retreiving the data from the api request");
