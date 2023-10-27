@@ -1,19 +1,42 @@
-// import { ADD_FAV, REMOVE_FAV, FILTER, ORDER } from "../actionsTypes/actionTypes"
+import { ADD_DOG,
+    REMOVE_DOG,
+    GET_TEMPERAMENTS,
+    GET_DOGS,
+    FILTER,
+    ORDER } from "../actionTypes/actionTypes";
 
 
 const initialState = {
-    myFavorites: [],
-    allCharacters: []
+    allDogs: [],
+    filteredDogs: [],
+    paginatedDogs: [],
+    pages:0
 }
 
 
 const reducer = (state = initialState, action) => {
     switch(action.type) {
-        case 1:
+        case GET_DOGS:
+            //pagination
+            let showDogs = [];
+            let pos = (action.payload.page - 1)*8;
+            let end = 0;
+            let totalPages = Math.ceil(action.payload.dogs.length/8)
+            //calculates the end of the array to show
+            if(pos+8 < action.payload.dogs.length){
+                end = pos+8;
+            }else{
+                end = action.payload.dogs.length;
+            }
+            while(pos<end){
+                showDogs.push(action.payload.dogs[pos]);
+                pos++;
+            }
             return {
                 ...state,
-                myFavorites: action.payload, 
-                allCharacters: action.payload
+                allDogs: [...action.payload.dogs],
+                paginatedDogs: showDogs, 
+                pages: totalPages
             }
         
         case 2:

@@ -26,8 +26,7 @@ const h_getTemperaments = async () => {
             }
         });
 
-        return await temList  
-        // return await Temperament.findAll()  
+        return await Temperament.findAll({order:[['name', 'ASC']]})  
 
     }else{
         throw Error ("The was an error retreiving the data from the api request");
