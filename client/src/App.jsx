@@ -17,19 +17,22 @@ import Nav from './components/Nav/nav';
 
 //Redux
 import { useDispatch, useSelector } from "react-redux";
-import { getDogs } from "./redux/actions/actions";
+import { getDogs, getByName, paginate } from "./redux/actions/actions";
 
 
 
 const App = ()=> {
+
   const dispatch = useDispatch();
   const dogs = useSelector((state) => state.paginatedDogs);
   const allDogs = useSelector((state) => state.allDogs);
+  const backUpDogs = useSelector((state) => state.backUpDogs);
   const totalPages = useSelector((state) => state.pages);
 
-// get temperaments when page is loaded ***************
+  const [page, setPage] = useState(1);
   const [temperaments, setTemperaments] = useState([]);
-  
+
+// get temperaments when page is loaded ***************
   const uploadTemperaments = async () => {
     const URL = "http://localhost:3003/temperaments";
     try {
@@ -38,28 +41,46 @@ const App = ()=> {
     } catch (error) {
         throw Error(error.message)
     }
-
-  }
-//**************************************************** */
-
-  const onSearch = (breed)=>{
-    alert('you clicked on search breed');
   }
 
-  const [page, setPage] = useState(1);
+// get dogs when page is loaded ***************
+  // const uploadDogs = async () => {
+  //   const URL = "http://localhost:3003/dogs";
+  //   try {
+  //     const response = await axios(URL);
+  //     await setAllDogs(response.data);
+  //     dispatch(paginate(page, response.data));
+  //   } catch (error) {
+  //       throw Error(error.message)
+  //   }
+  // }
+
+
+
+//Search by name******************************
+  const onSearch = (name)=>{
+    setPage(1);
+    dispatch(getByName(name));
+    dispatch(paginate(page, allDogs))
+    console.log(dogs);
+  }
 
   useEffect(()=>{
-    dispatch(getDogs(page, allDogs));
-    if(allDogs.length===0) uploadTemperaments();
-  },[page])
-
-  const handlePage =async (event)=>{
+    if(backUpDogs.length===0) {
+      dispatch(getDogs());
+      uploadTemperaments();
+    };
+    dispatch(paginate(page, allDogs))
+  },[page, allDogs])
+  
+  const handlePage = async(event)=>{
       let moveTo = page + event;
-      if (moveTo && moveTo<=totalPages) await setPage(moveTo);
+      if (moveTo && moveTo<=totalPages) setPage(moveTo);
+      await dispatch(paginate(page, allDogs))
   };
 
-
   const {pathname} = useLocation();
+  const navigate = useNavigate();
 
   return (
     <div className="App">

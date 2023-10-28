@@ -9,7 +9,7 @@ const SearchBar = ({onSearch, temperaments})=>{
     
     return (
        <div className="search-bar">
-          <input type='search' onChange={handleSrchChange} value={name} name='search'/>
+          <input type='search' onChange={handleSrchChange} value={name} id='search'/>
           <button className="nav-button" onClick={()=> onSearch(name)}>Search Breed</button>
           <label htmlFor="temperaments">Temperaments</label>
           <select id="temperaments"  >

@@ -1,33 +1,49 @@
 import { ADD_DOG,
     REMOVE_DOG,
-    GET_TEMPERAMENTS,
+    GET_BYNAME,
     GET_DOGS,
-    PAG_DOGS,
+    PAGINATE,
     FILTER,
     ORDER } from "../actionTypes/actionTypes";
 import axios from "axios";
 
-const URL = 'http://localhost:3003/dogs/';
+const URL = 'http://localhost:3003/';
     
-export const getDogs = (page, dogs) => {
+export const getDogs = () => {
     return async (dispatch) => {
       try {
-         dogs?.length!=0?dogs=[...dogs]:dogs=(await axios(URL)).data;
-
+            const dogs=(await axios(`${URL}dogs`)).data;
+            console.log(dogs);
             return dispatch({
                type: GET_DOGS,
-               payload: {dogs, page},
+               payload: [...dogs],
             });     
       } catch (error) {
          throw Error(error.message)
       }
     };
 }
-export const pagDogs = (page) => {
-            return {
-               type: PAG_DOGS,
-               payload: page,
-            };     
+export const getByName = (name) => {
+    return async (dispatch) => {
+        try {
+           const dogs=(await axios(`${URL}dogs?name=${name}`)).data;
+ 
+              return dispatch({
+                 type: GET_BYNAME,
+                 payload: [...dogs],
+              });     
+        } catch (error) {
+           throw Error(error.message)
+        }
+      }; 
+}
+export const paginate=(page, dogs)=>{
+    return { 
+        type: PAGINATE, 
+        payload: {page, dogs}
+}
+ 
+
 }
 
 // export const removeFav = (id) => {
