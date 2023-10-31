@@ -11,7 +11,7 @@ const Card = ({ id, name, weight, height, temperament, image }) => {
           <div className='name'>Breed: {name}</div>
           <div className='weight'>Weight: {weight}</div>
           <div className='height'>Height: {height}</div>
-          <div className='temperament'>Temperament: {temperament?.join(', ')}</div>
+          {temperament && <div className='temperament'>Temperament: {temperament.join(', ')}</div>}
           <div className='image'><img src={image} alt={name} /></div>
 
         </div>

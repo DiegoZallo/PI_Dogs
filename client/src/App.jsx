@@ -43,53 +43,37 @@ const App = ()=> {
     }
   }
 
-// get dogs when page is loaded ***************
-  // const uploadDogs = async () => {
-  //   const URL = "http://localhost:3003/dogs";
-  //   try {
-  //     const response = await axios(URL);
-  //     await setAllDogs(response.data);
-  //     dispatch(paginate(page, response.data));
-  //   } catch (error) {
-  //       throw Error(error.message)
-  //   }
-  // }
-
-
-
-//Search by name******************************
-  const onSearch = (name)=>{
-    setPage(1);
-    dispatch(getByName(name));
-    dispatch(paginate(page, allDogs))
-    console.log(dogs);
-  }
-
   useEffect(()=>{
     if(backUpDogs.length===0) {
       dispatch(getDogs());
       uploadTemperaments();
     };
-    dispatch(paginate(page, allDogs))
+    dispatch(paginate(page))
   },[page, allDogs])
-  
-  const handlePage = async(event)=>{
+
+//Search by name******************************
+  const onSearch = (name)=>{
+    setPage(1);
+    dispatch(getByName(name));
+    dispatch(paginate(page))
+  }
+
+  const handlePage = (event)=>{
       let moveTo = page + event;
       if (moveTo && moveTo<=totalPages) setPage(moveTo);
-      await dispatch(paginate(page, allDogs))
+      dispatch(paginate(page))
   };
 
   const {pathname} = useLocation();
-  const navigate = useNavigate();
 
   return (
     <div className="App">
-      {(pathname !== '/') && <Nav onSearch={onSearch} temperaments={temperaments}/>}
+      {(pathname !== '/') && <Nav onSearch={onSearch} temperaments={temperaments} setPage={setPage} />}
       <Routes>
         <Route path="/" exact element={<Landing />} />
         <Route path="/home" element={<Cards dogs={dogs} handlePage={handlePage} page={page} />} />
         <Route path="/detail/:id" element={<Details />} />
-        <Route path="/form" element={<Form temperaments={temperaments}/>} />
+        <Route path="/form" element={<Form temperaments={temperaments} dogsNames={backUpDogs}/>} />
 
         {/*  Any page that does not exist go here */}
         {/* {(pathname !== '*' && pathname !== '/') && <Route path='*' element={<NotFound />} />} */}

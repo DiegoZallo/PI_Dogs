@@ -2,8 +2,7 @@ import Card from "../Card/card";
 import './cards.css'
 
 const Cards = ({dogs, handlePage, page})=>{
-    console.log('llamo a cards');
-    console.log(dogs);
+
     return (
             <div className="cards">
             {   

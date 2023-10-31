@@ -4,7 +4,7 @@ import { ADD_DOG,
     GET_DOGS,
     PAGINATE,
     FILTER,
-    ORDER } from "../actionTypes/actionTypes";
+    ORDER} from "../actionTypes/actionTypes";
 import axios from "axios";
 
 const URL = 'http://localhost:3003/';
@@ -13,10 +13,22 @@ export const getDogs = () => {
     return async (dispatch) => {
       try {
             const dogs=(await axios(`${URL}dogs`)).data;
-            console.log(dogs);
             return dispatch({
                type: GET_DOGS,
                payload: [...dogs],
+            });     
+      } catch (error) {
+         throw Error(error.message)
+      }
+    };
+}
+export const addDog = (newDog) => {
+    return async (dispatch) => {
+      try {
+            await axios.post(`${URL}dogs`, newDog)
+            return dispatch({
+               type: ADD_DOG,
+               payload: newDog,
             });     
       } catch (error) {
          throw Error(error.message)
@@ -27,23 +39,32 @@ export const getByName = (name) => {
     return async (dispatch) => {
         try {
            const dogs=(await axios(`${URL}dogs?name=${name}`)).data;
- 
-              return dispatch({
+           return dispatch({
                  type: GET_BYNAME,
                  payload: [...dogs],
-              });     
+           });     
         } catch (error) {
            throw Error(error.message)
         }
       }; 
 }
-export const paginate=(page, dogs)=>{
-    return { 
-        type: PAGINATE, 
-        payload: {page, dogs}
+    export const paginate=(page)=>{
+        return { 
+            type: PAGINATE, 
+            payload: page
+            }
 }
- 
-
+    export const filter=(cond)=>{
+        return { 
+            type: FILTER, 
+            payload: cond
+            }
+}
+    export const order=(order)=>{
+        return { 
+            type: ORDER, 
+            payload: order
+            }
 }
 
 // export const removeFav = (id) => {
