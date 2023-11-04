@@ -13,18 +13,18 @@ const h_getTemperaments = async () => {
 
     if(Array.isArray(data)){
         let temList = [];
-        await data.map((dog)=>{
-            let auxTemts = dog.temperament?.split(', ');
-            for(i=0; i<auxTemts?.length; i++){
-                if(!temList.includes(auxTemts[i])){
-                    temList.push(auxTemts[i]);
-                    Temperament.findOrCreate({
-                        where: { name: auxTemts[i] }, 
-                        defaults: { name: auxTemts[i] }
-                    });                  
+            data.map((dog)=>{
+                let auxTemts = dog.temperament?.split(', ');
+                for(i=0; i<auxTemts?.length; i++){
+                    if(!temList.includes(auxTemts[i])){
+                        temList.push(auxTemts[i]);
+                        Temperament.findOrCreate({
+                            where: { name: auxTemts[i] }, 
+                            defaults: { name: auxTemts[i] }
+                        });                  
+                    }
                 }
-            }
-        });
+            });
 
         return await Temperament.findAll({order:[['name', 'ASC']]})  
 

@@ -1,13 +1,14 @@
-import './form.modules.css';
-import Card from "../Card/card";
+import './form.css';
 
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from 'react-router-dom';
 import { addDog, getDogs } from "../../redux/actions/actions";
 import validation from './validation';
 
 const Form = ({temperaments, dogsNames})=>{
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [errors, setErrors] = useState({});
     const [dogsData, setDogsData] = useState({ name: '', 
                                                minWeight: 0,
@@ -82,8 +83,10 @@ const Form = ({temperaments, dogsNames})=>{
                       life_span_max: 0,
                       temperaments:'',
                       image:''})
-        window.location.reload();
+        await window.location.reload();
       }
+
+      
     return (
     <div className="container">
         <form onSubmit={handleSubmit} className="form">
@@ -153,6 +156,14 @@ const Form = ({temperaments, dogsNames})=>{
 
             </div>
             <br />
+            <label htmlFor="image">Image URL</label>
+            <input type="text"
+                   name="image"
+                   id="image"
+                   value={dogsData.image}
+                   onChange={handleChange}/>
+               {errors.image !== '' && <span className="error-message">{errors.image}</span>}
+            <br />
             <label htmlFor="temperaments">Temperaments</label>
             <select id="temperaments" name="temperaments" multiple onChange={handleChange}>
                 {temperaments.map((temp)=>{
@@ -161,25 +172,9 @@ const Form = ({temperaments, dogsNames})=>{
             </select>
             {errors.temperaments !== '' && <span className="error-message">{errors.temperaments}</span>}
             <br />
-            <label htmlFor="image">Image URL</label>
-            <input type="text"
-                   name="image"
-                   id="image"
-                   value={dogsData.image}
-                   onChange={handleChange}/>
-             {errors.image !== '' && <span className="error-message">{errors.image}</span>}
-             <br />
 
             <button type="submit" disabled={Object.keys(errors).length > 0 || dogsData.name===''}>Create Dog</button>
         </form>
-        <div className="card">
-            <Card image={dogsData.image} 
-                  name={dogsData.name} 
-                  height= {[dogsData.minHeight, dogsData.maxHeight].join(' - ')} 
-                  weight = {[dogsData.minWeight, dogsData.maxWeight].join(' - ')} 
-                  temperaments = {document.getElementById(temperaments)}
-                  />
-        </div>
     </div>
     )
 }

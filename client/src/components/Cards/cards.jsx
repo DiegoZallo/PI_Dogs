@@ -1,30 +1,39 @@
 import Card from "../Card/card";
 import './cards.css'
 
-const Cards = ({dogs, handlePage, page})=>{
+const Cards = ({dogs, handlePage, page, totalPages}) => {
 
-    return (
-            <div className="cards">
-            {   
-                dogs.map((dog)=> {
-                    return <Card 
-                            key={dog.id}
-                            id={dog.id}
-                            name={dog.name}
-                            height={dog.height}
-                            weight={dog.weight}
-                            temperament={dog.temperament}
-                            image={dog.image}
+    return (<div className='cards-container'>
+                <div className="cards">
+                    {   
+                        dogs.map((dog) => {
+                            return <Card 
+                                key={dog.id}
+                                id={dog.id}
+                                name={dog.name}
+                                height={dog.height}
+                                weight={dog.weight}
+                                temperament={dog.temperament}
+                                image={dog.image}
                             />
-                })
-            }
-                <div>
-                    <button onClick={()=>handlePage(-1)}>Prev</button>
-                        {page}
-                    <button onClick={()=>handlePage(1)} >Next</button>
+                        })
+                    }
                 </div>
-            </div>
-        )   
+                <div className="pagination">
+                    <div className="page-button prev" onClick={() => handlePage(page-1)}></div>
+                        {Array.from({ length: totalPages }, (_, index) => (
+                            <div
+                                key={index + 1}
+                                className={`page-button ${index + 1 === page ? 'active' : 'inactive'}`}
+                                onClick={() => handlePage(index + 1)}
+                            >
+                                {index + 1}
+                            </div>
+                        ))}
+                    <div className="page-button next" onClick={() => handlePage(page+1)}></div>
+                </div>
+        </div>
+    );
 }
 
-export default Cards
+export default Cards;

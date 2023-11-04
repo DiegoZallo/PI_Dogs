@@ -8,16 +8,16 @@ const {api_key} = process.env;
 
 const URL = `https://api.thedogapi.com/v1/breeds?api_key=${api_key}`;
 
-const h_getDogDetail = async (idRaza) => {
+const h_getDogDetail = async (id) => {
 
-    if(Number(idRaza)){
+    if(Number(id)){
 
         let {data} = await axios(URL);
         if(!Array.isArray(data)){
             throw Error('We had a ploblem accesing the database')
         }   
         data = data.filter((dog)=>{
-            return dog.id == idRaza
+            return dog.id == id
         })
         if(data.length !== 1){
             throw Error('there was a problem retreivind dog detail')
@@ -32,7 +32,7 @@ const h_getDogDetail = async (idRaza) => {
         return dogsApi
     }else{
 
-        let dogsDb = await Dog.findByPk(idRaza,
+        let dogsDb = await Dog.findByPk(id,
             {include: Temperament});
 
         if(!dogsDb){

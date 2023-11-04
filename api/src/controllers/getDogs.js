@@ -19,7 +19,6 @@ const getDogs = async (req, res) => {
     }    
  };
   
-  // ⚠️ No modificar nada debajo de esta línea ⚠️
   module.exports = {
     getDogs
   };

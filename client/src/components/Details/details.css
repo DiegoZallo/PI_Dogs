@@ -1,0 +1,63 @@
+.box {
+  width: 400px;
+  height: 400px;
+  position: relative;
+  transform-style: preserve-3d;
+  animation: rotate 10s infinite linear;
+  left: 32%;
+}
+.box:hover {
+  animation-play-state: paused; /* Pause the animation on hover */
+}
+
+.side {
+  position: absolute;
+  width: 400px; /* Set a fixed width */
+  height: 400px; /* Set a fixed height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.9);
+  overflow: hidden; /* Clip images to fit within the fixed dimensions */
+}
+
+.front {
+  transform: rotateY(0deg) translateZ(200px);
+}
+
+.back {
+  transform: rotateY(180deg) translateZ(200px);
+}
+
+.rigth {
+  transform: rotateY(90deg) translateZ(200px);
+}
+
+.left {
+  transform: rotateY(-90deg) translateZ(200px);
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotateY(0deg);
+  }
+  100% {
+    transform: rotateY(360deg);
+  }
+}
+
+img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.notFound {
+  position: relative;
+  top: 100px;
+}
+
+.notFound img {
+  max-width: 50%;
+  max-height: 50%;
+}
+  

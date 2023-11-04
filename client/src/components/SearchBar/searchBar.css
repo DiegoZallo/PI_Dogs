@@ -1,0 +1,43 @@
+.searchBar {
+    position: relative;
+    top: 6px;
+    display: flex; 
+    justify-content:space-between;
+    gap: 10px;
+    background-color: rgb(216, 187, 243);
+    height: 29px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular';
+    font-size: small;
+}
+  
+  .filters{
+    background-color: blueviolet;
+  }
+
+
+
+
+  .filters,
+  .search,
+  .orders {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Adjust the gap between items */
+  }
+
+  .search-button:hover {
+    border-radius: 30%;
+    size: 20px;
+    background-color: rgb(139, 41, 231);
+  }
+  .search-button{
+    border: none;
+    size: 20px;
+    background-color: rgb(215, 191, 237);
+    color: rgb(18, 16, 16);
+  }
+
+
+
+
+  

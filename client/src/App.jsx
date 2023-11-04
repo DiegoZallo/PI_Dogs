@@ -17,7 +17,7 @@ import Nav from './components/Nav/nav';
 
 //Redux
 import { useDispatch, useSelector } from "react-redux";
-import { getDogs, getByName, paginate } from "./redux/actions/actions";
+import { getDogs, getTemperaments, getByName, paginate } from "./redux/actions/actions";
 
 
 
@@ -26,43 +26,33 @@ const App = ()=> {
   const dispatch = useDispatch();
   const dogs = useSelector((state) => state.paginatedDogs);
   const allDogs = useSelector((state) => state.allDogs);
+  const temperaments = useSelector((state) => state.temperaments);
   const backUpDogs = useSelector((state) => state.backUpDogs);
   const totalPages = useSelector((state) => state.pages);
 
   const [page, setPage] = useState(1);
-  const [temperaments, setTemperaments] = useState([]);
-
-// get temperaments when page is loaded ***************
-  const uploadTemperaments = async () => {
-    const URL = "http://localhost:3003/temperaments";
-    try {
-      await setTemperaments((await axios(URL)).data)
-
-    } catch (error) {
-        throw Error(error.message)
-    }
-  }
-
+    
+  // first time charges dogs and temperaments then paginate if allDogs change
   useEffect(()=>{
     if(backUpDogs.length===0) {
       dispatch(getDogs());
-      uploadTemperaments();
+      dispatch(getTemperaments());
     };
     dispatch(paginate(page))
   },[page, allDogs])
 
-//Search by name******************************
+
   const onSearch = (name)=>{
     setPage(1);
     dispatch(getByName(name));
-    dispatch(paginate(page))
   }
 
+ //Controls page changes and paginates 
   const handlePage = (event)=>{
-      let moveTo = page + event;
-      if (moveTo && moveTo<=totalPages) setPage(moveTo);
-      dispatch(paginate(page))
-  };
+    if(event >= 1 && event <= totalPages){
+        setPage(event)
+    };
+  }
 
   const {pathname} = useLocation();
 
@@ -71,7 +61,7 @@ const App = ()=> {
       {(pathname !== '/') && <Nav onSearch={onSearch} temperaments={temperaments} setPage={setPage} />}
       <Routes>
         <Route path="/" exact element={<Landing />} />
-        <Route path="/home" element={<Cards dogs={dogs} handlePage={handlePage} page={page} />} />
+        <Route path="/home" element={<Cards dogs={dogs} handlePage={handlePage} page={page} totalPages={totalPages}/>} />
         <Route path="/detail/:id" element={<Details />} />
         <Route path="/form" element={<Form temperaments={temperaments} dogsNames={backUpDogs}/>} />
 

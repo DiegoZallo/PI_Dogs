@@ -1,19 +1,20 @@
 import { ADD_DOG,
-    REMOVE_DOG,
+    DELETE_DOG,
     GET_BYNAME,
     GET_DOGS,
     PAGINATE,
     FILTER,
-    ORDER} from "../actionTypes/actionTypes";
+    ORDER,
+    GET_TEMPERAMENTS} from "../actionTypes/actionTypes";
 
 
 const initialState = {
         backUpDogs: [],
         allDogs: [],
         paginatedDogs: [],
-        pages:1
+        pages:1,
+        temperaments:[]
 }
-
 
 const reducer = (state = initialState, action) => {
     switch(action.type) {
@@ -29,16 +30,21 @@ const reducer = (state = initialState, action) => {
                 allDogs: action.payload
             }
         case ADD_DOG:
-            console.log(action.payload);
             return {
                 ...state,
                 backUpDogs: [...state.backUpDogs, action.payload],
                 allDogs: [...state.allDogs, action.payload],
             }
-        case GET_BYNAME:
+        case DELETE_DOG:
             return {
                 ...state,
-                allDogs: action.payload
+                backUpDogs: [...action.payload],
+                allDogs: [...action.payload],
+            }
+        case GET_TEMPERAMENTS:
+            return {
+                ...state,
+                temperaments: [...action.payload]
             }
         
         case PAGINATE:
@@ -93,11 +99,53 @@ const reducer = (state = initialState, action) => {
             if(action.payload ==='descendent'){
                 orderedDogs.sort((a, b) => b.name.localeCompare(a.name)) 
             }
+
+            const ascSort = (a, b) => {
+                // Split the weight string into start and end variables
+                const [startA, endA] = a.weight.split(' - ').map(Number);
+                const [startB, endB] = b.weight.split(' - ').map(Number);
+                // Compare by variable1 (start) first
+                if (startA < startB) {
+                  return -1;
+                }
+                if (startA > startB) {
+                  return 1;
+                }
+                // If variable1 is the same, compare by variable2 (end)
+                if (endA < endB) {
+                  return -1;
+                }
+                if (endA > endB) {
+                  return 1;
+                }
+                return 0;
+              };
+            const descSort = (a, b) => {
+                // Split the weight string into start and end variables
+                const [startA, endA] = a.weight.split(' - ').map(Number);
+                const [startB, endB] = b.weight.split(' - ').map(Number);
+                // Compare by variable1 (start) first
+                if (startA < startB) {
+                  return 1;
+                }
+                if (startA > startB) {
+                  return -1;
+                }
+                // If variable1 is the same, compare by variable2 (end)
+                if (endA < endB) {
+                  return 1;
+                }
+                if (endA > endB) {
+                  return -1;
+                }
+                return 0;
+              };
+
             if(action.payload ==='weightAsc'){
-                orderedDogs.sort((a, b) => (a.weight.split(' - ')[0]) - b.weight.split(' - ')[0]) 
+                orderedDogs.sort(ascSort) 
             }
             if(action.payload ==='weightDesc'){
-                orderedDogs.sort((a, b) => b.weight.split(' - ')[0] - a.weight.split(' - ')[0]) 
+                orderedDogs.sort(descSort) 
             }
             return {
                 ...state,

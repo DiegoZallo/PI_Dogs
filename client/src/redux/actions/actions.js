@@ -1,7 +1,8 @@
 import { ADD_DOG,
-    REMOVE_DOG,
+    DELETE_DOG,
     GET_BYNAME,
     GET_DOGS,
+    GET_TEMPERAMENTS,
     PAGINATE,
     FILTER,
     ORDER} from "../actionTypes/actionTypes";
@@ -48,6 +49,32 @@ export const getByName = (name) => {
         }
       }; 
 }
+export const deleteDog = (id) => {
+    return async (dispatch) => {
+        try {
+           const dogs=(await axios.delete(`${URL}dogs/${id}`)).data;
+           return dispatch({
+                 type: DELETE_DOG,
+                 payload: dogs,
+           });     
+        } catch (error) {
+           throw Error(error.message)
+        }
+      }; 
+}
+export const getTemperaments = () => {
+    return async (dispatch) => {
+      try {
+            const temp = (await axios(`${URL}temperaments`)).data
+            return dispatch({
+               type: GET_TEMPERAMENTS,
+               payload: temp,
+            });     
+      } catch (error) {
+         throw Error(error.message)
+      }
+    };
+}
     export const paginate=(page)=>{
         return { 
             type: PAGINATE, 
@@ -66,30 +93,6 @@ export const getByName = (name) => {
             payload: order
             }
 }
-
-// export const removeFav = (id) => {
-//     return async (dispatch) => {
-//       try {
-//          const {data} = await axios.delete(URL + id)
-//          return dispatch({
-//             type: REMOVE_DOG,
-//             payload: data,
-//          });         
-//       } catch (error) {
-//          throw Error(error.message)
-//       }
-//     };
-// }
-// export const filterCards = (gender) => {
-//     return { 
-//         type: FILTER, 
-//         payload: gender }
-// }
-// export const orderCards = (orden) => {
-//     return { 
-//         type: ORDER, 
-//         payload: orden }
-// }
 
 
     

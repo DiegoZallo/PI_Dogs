@@ -7,16 +7,53 @@
   
   .card {
     flex: 1;
-    width: calc(25% - 20px);
+    width: 270px;
+    height: 160px;
     margin: 10px;
     padding: 10px;
     border: 1px solid #ddd;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 10px rgba(152, 4, 250, 0.7);
     text-align: center;
+    background-color:blueviolet;
+    border-radius: 10%;
+    
   }
+.height, .weight, .temperament, .temperament-text  {
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande';
+  font-size: 10px;
+  color: white;
+}
+.breedName {
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande';
+  font-size: 15px;
+  font-style: oblique;
+  position: absolute;
+  color: white;
+}
 
 .image img {
-  width: 100px; /* Adjust the desired image dimensions */
-  height: 100px;
-  object-fit: cover;
+  width: 100%; /* Adjust the desired image dimensions */
+  max-height: 100px;
+  object-fit:scale-down;
+  border-radius: 300%;
 }
+
+
+.temperament {
+  display: inline-flex;
+  align-content: center;
+  overflow-y: auto;   
+}
+
+.delete img, .height img , .weight img, .temperament img{
+  width: 12px; /* Initial width */
+  height: 12px; /* Initial height */
+  
+}
+
+.delete {
+  position: relative;
+  top:-160px;
+  left:130px;
+}
+

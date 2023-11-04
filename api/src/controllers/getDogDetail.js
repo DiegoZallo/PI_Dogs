@@ -2,8 +2,8 @@ const {h_getDogDetail} = require('../handlers/h_getDogDetail')
 
 const getDogDetail = async (req, res) => {
     try {
-        const {idRaza} = req.params;
-        const dogs = await h_getDogDetail(idRaza)
+        const {id} = req.params;
+        const dogs = await h_getDogDetail(id)
         res.status(200).json(dogs)
         
     } catch (error) {
