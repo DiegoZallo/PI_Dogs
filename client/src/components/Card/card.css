@@ -16,13 +16,28 @@
     text-align: center;
     background-color:blueviolet;
     border-radius: 10%;
-    
+    transition: transform 0.3s ease; 
   }
+  .card:hover {
+    transform: scale(1.1); /* Make the card 10% larger on hover */
+  }
+
+
 .height, .weight, .temperament, .temperament-text  {
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande';
   font-size: 10px;
   color: white;
 }
+
+.height, .weight, .temperament {
+  display: inline-flex;
+  align-items: center; /* Vertically align the text with respect to the image icon */
+  overflow-y: auto;
+}
+.weight{
+  margin-left: 20px;;
+}
+
 .breedName {
   font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande';
   font-size: 15px;
@@ -46,8 +61,8 @@
 }
 
 .delete img, .height img , .weight img, .temperament img{
-  width: 12px; /* Initial width */
-  height: 12px; /* Initial height */
+  width: 20px; /* Initial width */
+  height: 20px; /* Initial height */
   
 }
 

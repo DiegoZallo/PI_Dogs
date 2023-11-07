@@ -42,7 +42,7 @@ export const getByName = (name) => {
            const dogs=(await axios(`${URL}dogs?name=${name}`)).data;
            return dispatch({
                  type: GET_BYNAME,
-                 payload: [...dogs],
+                 payload: dogs,
            });     
         } catch (error) {
            throw Error(error.message)
@@ -68,7 +68,7 @@ export const getTemperaments = () => {
             const temp = (await axios(`${URL}temperaments`)).data
             return dispatch({
                type: GET_TEMPERAMENTS,
-               payload: temp,
+               payload: temp
             });     
       } catch (error) {
          throw Error(error.message)
@@ -81,11 +81,14 @@ export const getTemperaments = () => {
             payload: page
             }
 }
-    export const filter=(cond)=>{
-        return { 
+    export const filter=(cond, name)=>{
+        return async (dispatch) => {
+        cond.name= name.toLowerCase();
+        return dispatch({ 
             type: FILTER, 
             payload: cond
-            }
+            });
+        }
 }
     export const order=(order)=>{
         return { 

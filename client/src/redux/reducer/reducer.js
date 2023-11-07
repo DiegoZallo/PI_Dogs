@@ -71,6 +71,12 @@ const reducer = (state = initialState, action) => {
             }                
         case FILTER:
             let filtered= [...state.backUpDogs];
+
+            if(action.payload.name!==''){
+                filtered = filtered.filter((dog)=>{
+                    return dog.name?.toLowerCase().includes(action.payload.name)
+                })
+            }
             if(action.payload.temp !=='all'){
                 filtered = filtered.filter((dog)=>{
                     return dog.temperament?.includes(action.payload.temp)

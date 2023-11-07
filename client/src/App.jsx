@@ -5,7 +5,7 @@ import axios from 'axios';
 import './App.css';
 
 // Hooks
-import {Routes, Route, useLocation, useNavigate} from 'react-router-dom';
+import {Routes, Route, useLocation} from 'react-router-dom';
 import { useState, useEffect } from "react";
 
 // Componnents to render
@@ -17,7 +17,7 @@ import Nav from './components/Nav/nav';
 
 //Redux
 import { useDispatch, useSelector } from "react-redux";
-import { getDogs, getTemperaments, getByName, paginate } from "./redux/actions/actions";
+import { getDogs, getTemperaments, paginate, getByName, filter, order } from "./redux/actions/actions";
 
 
 
@@ -31,6 +31,9 @@ const App = ()=> {
   const totalPages = useSelector((state) => state.pages);
 
   const [page, setPage] = useState(1);
+  const [filterCond, setFilterCond] = useState({temp:'all', addedBy:'all', order:'ascendent'})
+  const [name, setName] = useState('');
+   
     
   // first time charges dogs and temperaments then paginate if allDogs change
   useEffect(()=>{
@@ -42,9 +45,10 @@ const App = ()=> {
   },[page, allDogs])
 
 
-  const onSearch = (name)=>{
-    setPage(1);
+  const onSearch = async()=>{
+    setFilterCond({temp:'all', addedBy:'all', order:'ascendent'})
     dispatch(getByName(name));
+    setPage(1);
   }
 
  //Controls page changes and paginates 
@@ -58,7 +62,8 @@ const App = ()=> {
 
   return (
     <div className="App">
-      {(pathname !== '/') && <Nav onSearch={onSearch} temperaments={temperaments} setPage={setPage} />}
+      {(pathname !== '/') && <Nav onSearch={onSearch} temperaments={temperaments} setPage={setPage} setFilterCond={setFilterCond} filterCond={filterCond} setName={setName} name={name}/>}
+      {/* {(pathname !== '/') && <Nav temperaments={temperaments} setPage={setPage} setFilterCond={setFilterCond} filterCond={filterCond} setName={setName} name={name}/>} */}
       <Routes>
         <Route path="/" exact element={<Landing />} />
         <Route path="/home" element={<Cards dogs={dogs} handlePage={handlePage} page={page} totalPages={totalPages}/>} />

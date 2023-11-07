@@ -8,7 +8,7 @@ import validation from './validation';
 
 const Form = ({temperaments, dogsNames})=>{
     const dispatch = useDispatch();
-    const navigate = useNavigate();
+    const [created, setCreated] = useState(false);
     const [errors, setErrors] = useState({});
     const [dogsData, setDogsData] = useState({ name: '', 
                                                minWeight: 0,
@@ -26,6 +26,7 @@ const Form = ({temperaments, dogsNames})=>{
           ...dogsData,
           [event.target.name]: event.target.value
         });
+     
         if (dogsData.name !== '' || 
             dogsData.minWeight !== 0 ||
             dogsData.maxWeight !== 0 ||
@@ -53,128 +54,147 @@ const Form = ({temperaments, dogsNames})=>{
           setErrors(validation(dogsData, dogsNames));
         }
     }, [dogsData]);
-
-    const handleKeyDown = (event) => {
-        // Prevent keyboard input while allowing the increment/decrement controls
-        event.preventDefault();
-    };
     
 
     const handleSubmit = async(event) => {
         event.preventDefault();
-        const selectedTemperaments = Array.from(event.target.temperaments.selectedOptions).map(option => option.value);
-        const newDog = {
-                name: dogsData.name.charAt(0).toUpperCase()+dogsData.name.slice(1).toLowerCase(), 
-                image: dogsData.image, 
-                height: [Number(dogsData.minHeight), Number(dogsData.maxHeight)].join(' - '), 
-                weight: [Number(dogsData.minWeight), Number(dogsData.maxWeight)].join(' - '), 
-                life_span: [Number(dogsData.life_span_min), Number(dogsData.life_span_max)].join(' - ') + ' years', 
-                temperament: selectedTemperaments
-            };
-        dispatch(addDog(newDog));
-        dispatch(getDogs());
+        try {
+            const selectedTemperaments = Array.from(event.target.temperaments.selectedOptions).map(option => option.value);
+            const newDog = {
+                    name: dogsData.name.charAt(0).toUpperCase()+dogsData.name.slice(1).toLowerCase(), 
+                    image: dogsData.image, 
+                    height: [Number(dogsData.minHeight), Number(dogsData.maxHeight)].join(' - '), 
+                    weight: [Number(dogsData.minWeight), Number(dogsData.maxWeight)].join(' - '), 
+                    life_span: [Number(dogsData.life_span_min), Number(dogsData.life_span_max)].join(' - ') + ' years', 
+                    temperament: selectedTemperaments
+                };
+            dispatch(addDog(newDog));
+            dispatch(getDogs());
+            setCreated(true);
 
-        setDogsData({ name: '', 
-                      minWeight: 0,
-                      maxWeight: 0,
-                      minHeight: 0,
-                      maxHeight: 0,
-                      life_span_min: 0,
-                      life_span_max: 0,
-                      temperaments:'',
-                      image:''})
-        await window.location.reload();
+            setDogsData({ name: '', 
+            minWeight: 0,
+            maxWeight: 0,
+            minHeight: 0,
+            maxHeight: 0,
+            life_span_min: 0,
+            life_span_max: 0,
+            temperaments:'',
+            image:''})            
+        } catch (error) {
+            setErrors({creation: error.message})
+        }
       }
+
+    const handleCloseMessage =()=>{
+        document.getElementById('temperaments').value=[];
+        setCreated(false);
+    }
 
       
     return (
     <div className="container">
         <form onSubmit={handleSubmit} className="form">
-            <label htmlFor="name">Breed</label>
+            <label htmlFor="name">🐶</label>
             <input  type="text"
                     name="name"
                     id="name"
                     value={dogsData.name}
                     onChange={handleChange}/>
-            {errors.name !== '' && <span className="error-message">{errors.name}</span>}
+            {errors.name !== '' && <span className="error-message"> {errors.name}</span>}
             <br />
-            <div>Weight: <br />
-                <label htmlFor="minWeight"> Min</label>
+            <div>⚖️ 
+                <label htmlFor="minWeight"> min</label>
                 <input  type="number" min="1" max="100" 
                         name="minWeight"
                         id="minWeight"
                         value={dogsData.minWeight}
                         onChange={handleChange}
-                        onKeyDown={handleKeyDown}/>
-                <label htmlFor="maxWeight"> Max</label>
+                        />
+                <label htmlFor="maxWeight"> max</label>
                 <input  type="number" min="1" max="100" 
                         name="maxWeight"
                         id="maxWeight"
                         value={dogsData.maxWeight}
                         onChange={handleChange}
-                        onKeyDown={handleKeyDown}/>
-                {errors.minWeight !== '' && <span className="error-message">{errors.minWeight}</span>}
-                {errors.maxWeight !== '' && <span className="error-message">{errors.maxWeight}</span>}
+                        />
+                {errors.minWeight !== '' && <span className="error-message"> {errors.minWeight}</span>}
+                {errors.maxWeight !== '' && <span className="error-message"> {errors.maxWeight}</span>}
             </div>
             <br />
-            <div>Height: <br />
-                <label htmlFor="minHeight"> Min</label>
+            <div>📏
+                <label htmlFor="minHeight"> min</label>
                 <input  type="number" min="1" max="100" 
                         name="minHeight"
                         id="minHeight"
                         value={dogsData.minHeight}
                         onChange={handleChange}
-                        onKeyDown={handleKeyDown}/>
-                <label htmlFor="maxHeight"> Max</label>
+                        />
+                <label htmlFor="maxHeight"> max</label>
                 <input  type="number" min="1" max="100" 
                         name="maxHeight"
                         id="maxHeight"
                         value={dogsData.maxHeight}
                         onChange={handleChange}
-                        onKeyDown={handleKeyDown}/>
-                {errors.minHeight !== '' && <span className="error-message">{errors.minHeight}</span>}
-                {errors.maxHeight !== '' && <span className="error-message">{errors.maxHeight}</span>}
+                        />
+                {errors.minHeight !== '' && <span className="error-message"> {errors.minHeight}</span>}
+                {errors.maxHeight !== '' && <span className="error-message"> {errors.maxHeight}</span>}
             </div>
             <br />
-            <div>Life Span: <br />
-                <label htmlFor="life_span_min"> Min</label>
+            <div>❤️
+                <label htmlFor="life_span_min"> min</label>
                 <input  type="number" min="1" max="50" 
                         name="life_span_min"
                         id="life_span_min"
                         value={dogsData.life_span_min}
                         onChange={handleChange}
-                        onKeyDown={handleKeyDown}/>
-                <label htmlFor="life_span_max"> Max</label>
+                        />
+                <label htmlFor="life_span_max"> max</label>
                 <input  type="number" min="1" max="25" 
                         name="life_span_max"
                         id="life_span_max"
                         value={dogsData.life_span_max}
                         onChange={handleChange}
-                        onKeyDown={handleKeyDown}/>
-                {errors.life_span_min !== '' && <span className="error-message">{errors.life_span_min}</span>}
-                {errors.life_span_max !== '' && <span className="error-message">{errors.life_span_max}</span>}
+                        />
+                {errors.life_span_min !== '' && <span className="error-message"> {errors.life_span_min}</span>}
+                {errors.life_span_max !== '' && <span className="error-message"> {errors.life_span_max}</span>}
 
             </div>
             <br />
-            <label htmlFor="image">Image URL</label>
+            <label htmlFor="image">🖼️ url:</label>
             <input type="text"
                    name="image"
                    id="image"
                    value={dogsData.image}
                    onChange={handleChange}/>
-               {errors.image !== '' && <span className="error-message">{errors.image}</span>}
+               {errors.image !== '' && <span className="error-message"> {errors.image}</span>}
             <br />
-            <label htmlFor="temperaments">Temperaments</label>
-            <select id="temperaments" name="temperaments" multiple onChange={handleChange}>
+            <label htmlFor="temperaments">🎭</label>
+            <select id="temperaments" name="temperaments" multiple size='7' onChange={handleChange} className='selTemp'>
                 {temperaments.map((temp)=>{
                     return <option key={temp.id} value={temp.id}>{temp.name}</option>
                 })}
             </select>
-            {errors.temperaments !== '' && <span className="error-message">{errors.temperaments}</span>}
+            {errors.temperaments !== '' && <span className="error-message"> {errors.temperaments}</span>}
             <br />
 
-            <button type="submit" disabled={Object.keys(errors).length > 0 || dogsData.name===''}>Create Dog</button>
+            <button type="submit" disabled={Object.keys(errors).length > 0 || dogsData.name===''} className='submit-button' >Create</button>
         </form>
+        {errors.creation !== '' && <span className="error-message">{errors.creation}</span>}
+
+        {dogsData.image!==''?
+            <img className='dogImage' src={dogsData.image} alt="❌" />
+        :
+            <img className='dogImage' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAzI5kcxbq88NthmxTkhxPtRg0hN8FJJFs2A&usqp=CAU" alt="❌" />
+        }
+        
+        {/* Message displayed when the dog is created */}
+        {created && (
+        <div className="success-message">
+           <span className="dog-created">🐶 Dog created successfully! 🐶</span>
+           <button onClick={handleCloseMessage} className="close-button">Close</button>
+        </div>
+        )}
     </div>
     )
 }

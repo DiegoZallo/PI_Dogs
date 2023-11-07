@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './nav.css';
 
-const Nav = ({ onSearch, temperaments, setPage }) => {
+const Nav = ({ onSearch, temperaments, setPage, setFilterCond, filterCond, setName, name }) => {
   const { pathname } = useLocation();
   const [startImageSrc, setStartImageSrc] = useState('https://cdn-icons-png.flaticon.com/128/12280/12280747.png');
   const [homeImageSrc, setHomeImageSrc] = useState('https://cdn-icons-png.flaticon.com/128/11706/11706652.png');
@@ -66,7 +66,7 @@ const Nav = ({ onSearch, temperaments, setPage }) => {
         </div>
 
         {!pathname.includes('/detail/') && pathname !== '/form' && (
-          <SearchBar onSearch={onSearch} temperaments={temperaments} setPage={setPage} />
+          <SearchBar onSearch={onSearch} temperaments={temperaments} setPage={setPage} filterCond={filterCond} setFilterCond={setFilterCond} setName={setName} name={name}/>
         )}
       </nav>
     </div>

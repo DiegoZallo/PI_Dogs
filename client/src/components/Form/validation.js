@@ -7,7 +7,8 @@ const validation = (dogsData, dogsNames)=>{
 
     dogsNames = dogsNames?.filter((dog)=>{
         return dog.name?.toLowerCase() === dogsData.name.toLowerCase()
-    })
+    });
+
     if(dogsNames?.length!==0){
         errors.name = 'Breed name already exist'
         return errors        
@@ -34,6 +35,9 @@ const validation = (dogsData, dogsNames)=>{
     }else if(isNaN(dogsData.maxWeight)){
         errors.maxWeight = 'Maximun Weight can only be numbers'
         return errors
+    }else if(dogsData.maxWeight > 100 ){
+        errors.minWeight = 'Maximun Weight should be less than 100kgs'
+        return errors
     }else if(Number(dogsData.minWeight) > Number(dogsData.maxWeight)){
         errors.minWeight = 'Minimun Weight should be less or equal maxiumun'
         return errors
@@ -47,6 +51,9 @@ const validation = (dogsData, dogsNames)=>{
         return errors
     }else if(Number(dogsData.minHeight)<15){
         errors.maxHeight = 'Minimun Height is too low'
+        return errors
+    }else if(Number(dogsData.maxHeight) > 100){
+        errors.minHeight = 'Maximun Height should be less than 100cms'
         return errors
     }else if(isNaN(dogsData.maxHeight)){
         errors.maxHeight = 'Maximun Height can only be numbers'
@@ -67,6 +74,9 @@ const validation = (dogsData, dogsNames)=>{
         return errors
     }else if(isNaN(dogsData.life_span_max)){
         errors.life_span_max = 'Maximun life span can only be numbers'
+        return errors
+    }else if(Number(dogsData.life_span_max) > 30){
+        errors.life_span_min = 'Maximun life span should be less than 30 years'
         return errors
     }else if(Number(dogsData.life_span_min) > Number(dogsData.life_span_max)){
         errors.life_span_min = 'Minimun life span should be less or equal maxiumun'

@@ -16,15 +16,13 @@ const Details = () => {
       })
       .catch((error) => setError(error));
 
-    return () => setDog({});
+    return () => {setDog({}); setError()}
   }, [id]);
 
   return (
     <div className="detail">
-      {!error ? ( 
-        <div>
-          <div className="det_id">Id: {dog?.id}</div>
-          <div className="det_name">Breed: {dog.name}</div>
+      {!error? ( 
+        <div className="detailSpace">
           <div className="box">
             <div className="side back">
               <img src={dog.image} alt={dog.name} />
@@ -40,10 +38,12 @@ const Details = () => {
             </div>
           </div>
           <div className="otherDetails">
-            <div className="det_weight">Weight: {dog.weight} kgs</div>
-            <div className="det_height">Height: {dog.height} cms</div>
-            <div className="det_life_span">Life span: {dog.life_span}</div>
-            <div className="det_temperament">Temperament: {dog.temperament?.join(", ")}</div>            
+            <div className="det_id">🆔 {dog?.id}</div>
+            <div className="det_name">🐶 {dog.name}</div>
+            <div className="det_weight">⚖️ {dog.weight} kgs</div>
+            <div className="det_height">📏 {dog.height} cms</div>
+            <div className="det_life_span">❤️ {dog.life_span}</div>
+            <div className="det_temperament">🎭 {dog.temperament?.join(", ")}</div>            
           </div>
         </div>
       ) : (
