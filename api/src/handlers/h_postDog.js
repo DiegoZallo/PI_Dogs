@@ -8,10 +8,10 @@ const h_postDog = async ({ name, image, height, weight, life_span, temperament }
     if (created) {
         const result = await newDog.addTemperament(temperament);
         if (result.length !== temperament.length) {
-            throw Error( "Failed to associate Temperaments" );
+            throw new Error( "Failed to associate Temperaments" );
         }
     } else {
-        throw Error( "Dog already exists" );
+        throw new Error( "Dog already exists" );
     } 
  };
    

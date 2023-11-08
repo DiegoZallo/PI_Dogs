@@ -10,6 +10,7 @@ const SearchBar = ({onSearch, temperaments, setPage, setFilterCond, filterCond, 
     useEffect(()=>{
       dispatch(filter(filterCond, name))
       dispatch(order(filterCond.order))
+      setPage(1)
     },[filterCond])
 
     const handleSrchChange = (event)=> {
@@ -20,7 +21,6 @@ const SearchBar = ({onSearch, temperaments, setPage, setFilterCond, filterCond, 
       event.target.name === 'temperaments' && setFilterCond({...filterCond, temp: event.target.value});
       event.target.name === 'addedBy' && setFilterCond({...filterCond, addedBy: event.target.value});
       event.target.name === 'order' &&  setFilterCond({...filterCond, order: event.target.value});
-      setPage(1)
    }    
 
    const cleanAll=()=>{

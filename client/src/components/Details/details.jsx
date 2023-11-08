@@ -52,7 +52,7 @@ const Details = ({handleDelete}) => {
         </div>
       ) : (
         <div className="notFound">
-          <img src="https://www.sniffspace.com.au/templates/front/images/error_404.png" alt="" />
+          <img src="https://www.sniffspace.com.au/templates/front/images/error_404.png" alt="Page not found" />
         </div>
       )}
 

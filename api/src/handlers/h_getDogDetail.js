@@ -1,10 +1,9 @@
 const axios = require('axios');
 const {Dog, Temperament} = require('../db');
 
-//get the api key from .env file
 require('dotenv').config();
 const {api_key} = process.env;
-//-------------------------------
+
 
 const URL = `https://api.thedogapi.com/v1/breeds?api_key=${api_key}`;
 
@@ -26,10 +25,11 @@ const h_getDogDetail = async (id) => {
             weight: data[0].weight.metric, 
             height: data[0].height.metric, 
             image: data[0].image.url,
-            temperament: data[0].temperament.split(', ')
+            temperament: data[0].temperament?.split(', ')
         }
     
         return dogsApi
+
     }else{
 
         let dogsDb = await Dog.findByPk(id,
@@ -49,7 +49,6 @@ const h_getDogDetail = async (id) => {
             temperament: auxTemp,
             image: dogsDb.image
         }
-        
 
         return dogs
     }

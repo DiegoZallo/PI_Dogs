@@ -14,7 +14,7 @@ const getTemperaments = async (req, res) => {
     }    
  };
   
-  // ⚠️ No modificar nada debajo de esta línea ⚠️
+
   module.exports = {
     getTemperaments
   };

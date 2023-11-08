@@ -56,14 +56,15 @@ const reducer = (state = initialState, action) => {
         
         case PAGINATE:
             //pagination
+            const cardsXpage = 8;
             let showDogs = [];
-            let pos = (action.payload - 1)*8;
-            let totalPages = Math.ceil(state.allDogs.length/8)
+            let pos = (action.payload - 1)*cardsXpage;
+            let totalPages = Math.ceil(state.allDogs.length/cardsXpage)
             
             //calculates the end of the array to show
             let end = 0;
-            if(pos+8 < state.allDogs.length){
-                end = pos+8;
+            if(pos+cardsXpage < state.allDogs.length){
+                end = pos+cardsXpage;
             }else{
                 end = state.allDogs.length;
             }

@@ -1,4 +1,4 @@
-const {Dog, Temperament} = require('../db');
+
 const {h_postDog} = require('../handlers/h_postDog')
 
 const postDog = async (req, res) => {

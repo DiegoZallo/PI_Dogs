@@ -19,6 +19,7 @@ const App = ()=> {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  
   const dogs = useSelector((state) => state.paginatedDogs);
   const allDogs = useSelector((state) => state.allDogs);
   const temperaments = useSelector((state) => state.temperaments);
