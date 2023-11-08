@@ -60,13 +60,13 @@
   overflow-y: auto;   
 }
 
-.delete img, .height img , .weight img, .temperament img{
+.myDogs img, .height img , .weight img, .temperament img{
   width: 20px; /* Initial width */
   height: 20px; /* Initial height */
   
 }
 
-.delete {
+.myDogs {
   position: relative;
   top:-160px;
   left:130px;

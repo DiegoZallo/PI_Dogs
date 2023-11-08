@@ -18,6 +18,7 @@
     text-align: left;
     font-size: 15px;
     color: white;
+    margin-top: 10px;
   }
   .container{
     display: flex;
@@ -32,6 +33,7 @@
     height: 480px; 
     overflow: hidden; 
     border-color: blueviolet;
+    margin-top: 10px;
     
     
   }
@@ -52,7 +54,7 @@
     color: white;
 }
 
-.success-message {
+.success-message, .catch-message {
     position: absolute;
     display: flex;
     flex-direction: column;

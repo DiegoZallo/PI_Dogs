@@ -1,13 +1,12 @@
 import './form.css';
-
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from 'react-router-dom';
-import { addDog, getDogs } from "../../redux/actions/actions";
+import { useDispatch, useSelector } from "react-redux";
+import { addDog, getDogs, reset_error } from "../../redux/actions/actions";
 import validation from './validation';
 
 const Form = ({temperaments, dogsNames})=>{
     const dispatch = useDispatch();
+    const catchError = useSelector((state)=>state.global_Error);
     const [created, setCreated] = useState(false);
     const [errors, setErrors] = useState({});
     const [dogsData, setDogsData] = useState({ name: '', 
@@ -26,19 +25,6 @@ const Form = ({temperaments, dogsNames})=>{
           ...dogsData,
           [event.target.name]: event.target.value
         });
-     
-        if (dogsData.name !== '' || 
-            dogsData.minWeight !== 0 ||
-            dogsData.maxWeight !== 0 ||
-            dogsData.minHeight !== 0 ||
-            dogsData.maxHeight !== 0 ||
-            dogsData.life_span_min !== 0 ||
-            dogsData.life_span_max !== 0 ||
-            dogsData.image !== '' ||
-            dogsData.temperaments == ''          
-            ) {
-          setErrors(validation(dogsData, dogsNames));
-        }
       }
 
       useEffect(() => {
@@ -53,9 +39,10 @@ const Form = ({temperaments, dogsNames})=>{
             ) {
           setErrors(validation(dogsData, dogsNames));
         }
-    }, [dogsData]);
-    
+    }, [dogsData, catchError]);
 
+
+    
     const handleSubmit = async(event) => {
         event.preventDefault();
         try {
@@ -69,18 +56,22 @@ const Form = ({temperaments, dogsNames})=>{
                     temperament: selectedTemperaments
                 };
             dispatch(addDog(newDog));
+          
             dispatch(getDogs());
-            setCreated(true);
 
-            setDogsData({ name: '', 
-            minWeight: 0,
-            maxWeight: 0,
-            minHeight: 0,
-            maxHeight: 0,
-            life_span_min: 0,
-            life_span_max: 0,
-            temperaments:'',
-            image:''})            
+            if(catchError==='none'){
+                setCreated(true);
+                setDogsData({ name: '', 
+                minWeight: 0,
+                maxWeight: 0,
+                minHeight: 0,
+                maxHeight: 0,
+                life_span_min: 0,
+                life_span_max: 0,
+                temperaments:'',
+                image:''})      
+            }
+      
         } catch (error) {
             setErrors({creation: error.message})
         }
@@ -91,7 +82,7 @@ const Form = ({temperaments, dogsNames})=>{
         setCreated(false);
     }
 
-      
+
     return (
     <div className="container">
         <form onSubmit={handleSubmit} className="form">
@@ -188,13 +179,23 @@ const Form = ({temperaments, dogsNames})=>{
             <img className='dogImage' src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAzI5kcxbq88NthmxTkhxPtRg0hN8FJJFs2A&usqp=CAU" alt="❌" />
         }
         
-        {/* Message displayed when the dog is created */}
-        {created && (
-        <div className="success-message">
-           <span className="dog-created">🐶 Dog created successfully! 🐶</span>
-           <button onClick={handleCloseMessage} className="close-button">Close</button>
-        </div>
-        )}
+        {/* Error Message displayed when the dog is created */}
+        {catchError!=='none' && catchError!==''?(
+            <div className="catch-message">
+                <span className='catch-error' id='catch-error' key='catch-error'>
+                    <p>Error</p>
+                    <p>Message: {catchError}</p>
+                </span>
+                <button onClick={()=>dispatch(reset_error())}>Close</button>
+            </div>
+        ):
+        created && (
+            <div className="success-message">
+               <span className="dog-created" id="dog-created" key="dog-created">🐶 Dog created successfully! 🐶</span>
+               <button onClick={handleCloseMessage} className="close-button">Close</button>
+            </div>
+            )
+        }
     </div>
     )
 }

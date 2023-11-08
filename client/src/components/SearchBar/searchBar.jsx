@@ -32,7 +32,7 @@ const SearchBar = ({onSearch, temperaments, setPage, setFilterCond, filterCond, 
        <div className="searchBar">
          <div className="search">
             <input className="input-button" type='search' onChange={handleSrchChange} value={name} id='search'/>
-            <button className="search-button" onClick={()=>onSearch()}>🔎 Breed</button>
+            <button className="search-button" onClick={onSearch}>🔎 Breed</button>
          </div>
          
          <div className="filters">

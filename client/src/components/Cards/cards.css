@@ -52,3 +52,20 @@
     color: black;
     font-weight: bolder;
 }
+
+.noDogFound  {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    top:30%;
+    left: 26%;
+    border-color: blueviolet;
+    border-style: groove;
+    padding: 80px;
+    background-color: blueviolet;
+    color: white;
+    border-radius: 10%;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande';
+    font-size: larger;
+}

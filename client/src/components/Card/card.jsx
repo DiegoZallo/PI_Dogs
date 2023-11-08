@@ -1,23 +1,9 @@
-import React from "react";
-import { useState } from "react";
-import { Link } from 'react-router-dom';
-import { deleteDog } from "../../redux/actions/actions";
-import { useDispatch } from "react-redux";
 import "./card.css";
+import React from "react";
+import { Link } from 'react-router-dom';
 
 const Card = ({ id, name, height, weight, temperament, image }) => {
-  const [deleteImage, setDeleteImage] = useState("https://cdn-icons-png.flaticon.com/128/11186/11186844.png");
-
-  const handleHomeMouseOver = () => {
-    setDeleteImage('https://cdn-icons-gif.flaticon.com/11186/11186844.gif');
-  };
-
-  const handleHomeMouseOut = () => {
-    setDeleteImage("https://cdn-icons-png.flaticon.com/128/11186/11186844.png");
-  };
-
-  const dispatch = useDispatch();
-
+  
   return (
 
       <div className="card">
@@ -44,8 +30,8 @@ const Card = ({ id, name, height, weight, temperament, image }) => {
           </div>
 
           {isNaN(id) &&
-          <div className="delete" onMouseOver={handleHomeMouseOver} onMouseOut={handleHomeMouseOut} onClick={()=>dispatch(deleteDog(id))}>
-            <img src={deleteImage} alt='remove dogs' />
+          <div className="myDogs" >
+            <img src='.\images\Dogs icons\paw.png' alt='my dogs' />
           </div>
           }
       </div>

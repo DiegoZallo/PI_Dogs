@@ -5,7 +5,8 @@ import { ADD_DOG,
     PAGINATE,
     FILTER,
     ORDER,
-    GET_TEMPERAMENTS} from "../actionTypes/actionTypes";
+    GET_TEMPERAMENTS,
+    ERROR_TYPE} from "../actionTypes/actionTypes";
 
 
 const initialState = {
@@ -13,7 +14,8 @@ const initialState = {
         allDogs: [],
         paginatedDogs: [],
         pages:1,
-        temperaments:[]
+        temperaments:[],
+        global_Error:''
 }
 
 const reducer = (state = initialState, action) => {
@@ -23,28 +25,33 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 backUpDogs: [...action.payload],
                 allDogs: [...action.payload],
+                global_Error:'none'
             }
         case GET_BYNAME:
             return {
                 ...state,
-                allDogs: action.payload
+                allDogs: action.payload,
+                global_Error:'none'
             }
         case ADD_DOG:
             return {
                 ...state,
                 backUpDogs: [...state.backUpDogs, action.payload],
                 allDogs: [...state.allDogs, action.payload],
+                global_Error:'none'
             }
         case DELETE_DOG:
             return {
                 ...state,
                 backUpDogs: [...action.payload],
                 allDogs: [...action.payload],
+                global_Error:'none'
             }
         case GET_TEMPERAMENTS:
             return {
                 ...state,
-                temperaments: [...action.payload]
+                temperaments: [...action.payload],
+                global_Error:'none'
             }
         
         case PAGINATE:
@@ -53,8 +60,8 @@ const reducer = (state = initialState, action) => {
             let pos = (action.payload - 1)*8;
             let totalPages = Math.ceil(state.allDogs.length/8)
             
-            let end = 0;
             //calculates the end of the array to show
+            let end = 0;
             if(pos+8 < state.allDogs.length){
                 end = pos+8;
             }else{
@@ -64,6 +71,7 @@ const reducer = (state = initialState, action) => {
                 showDogs.push(state.allDogs[pos]);
                 pos++;
             }
+            
             return {
                 ...state,
                 paginatedDogs: showDogs, 
@@ -156,6 +164,11 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 allDogs: [...orderedDogs],
+            }
+        case ERROR_TYPE:
+            return {
+                ...state,
+                global_Error: action.payload
             }
         default:
             return {...state}

@@ -1,8 +1,8 @@
-import Card from "../Card/card";
 import './cards.css'
+import Card from "../Card/card";
 
 const Cards = ({dogs, handlePage, page, totalPages}) => {
-
+    
     return (<div className='cards-container'>
                 <div className="cards">
                     {   
@@ -19,6 +19,7 @@ const Cards = ({dogs, handlePage, page, totalPages}) => {
                         })
                     }
                 </div>
+                {dogs.length==0 &&<span className="noDogFound">🤷🏾No Dog Found, please change your search criteria🧐</span>}
                 <div className="pagination">
                     <div className="page-button prev" onClick={() => handlePage(page-1)}></div>
                         {Array.from({ length: totalPages }, (_, index) => (

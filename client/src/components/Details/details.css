@@ -5,6 +5,7 @@
   transform-style: preserve-3d;
   animation: rotate 10s infinite linear; 
   right: 100px;
+
 }
 .box:hover {
   animation-play-state: paused; 
@@ -20,6 +21,7 @@
   overflow: hidden; 
   border: 3px;
   border-radius: 0%;
+  background-color: rgba(137, 43, 226, 0.2);
 }
 
 .front {
@@ -71,7 +73,8 @@ img {
   border-top-right-radius: 20%;
   border-bottom-right-radius: 20%;
   padding-right: 1%;
-
+  width: 900px;
+  height: 400px;
 }
 .otherDetails{
   align-items:center;
@@ -79,12 +82,13 @@ img {
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande';
   color: white;
   width: 500px;
-  padding-top: 10%;
+  padding-top: 5%;
   font-size: 25px;
   text-align: left;
   overflow-y:hidden;
   border-top-right-radius: 10%;
   border-bottom-right-radius: 10%;
+  overflow-y:hidden;
 
   
  
@@ -96,3 +100,18 @@ img {
 
 }
 
+.delete_dog img{
+  height: 50px;
+  width:  50px;
+}
+.delete_dog img:hover{
+  height: 58px;
+  width:  58px;
+  cursor: pointer;
+  
+}
+.delete_dog{
+  margin-top: 30px;
+  align-items:flex-end;
+  display: inline-flex;
+}

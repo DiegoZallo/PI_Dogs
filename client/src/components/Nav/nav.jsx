@@ -5,32 +5,22 @@ import './nav.css';
 
 const Nav = ({ onSearch, temperaments, setPage, setFilterCond, filterCond, setName, name }) => {
   const { pathname } = useLocation();
+  
   const [startImageSrc, setStartImageSrc] = useState('https://cdn-icons-png.flaticon.com/128/12280/12280747.png');
   const [homeImageSrc, setHomeImageSrc] = useState('https://cdn-icons-png.flaticon.com/128/11706/11706652.png');
   const [formImageSrc, setFormImageSrc] = useState('https://cdn-icons-png.flaticon.com/128/11706/11706661.png');
 
 
-  const handleStartMouseOver = () => {
-    setStartImageSrc('https://cdn-icons-gif.flaticon.com/12280/12280747.gif');
-  };
-  const handleStartMouseOut = () => {
-    setStartImageSrc('https://cdn-icons-png.flaticon.com/128/12280/12280747.png');
-  };
+  const handleStartMouseOver = () => {setStartImageSrc('https://cdn-icons-gif.flaticon.com/12280/12280747.gif')};
+  const handleStartMouseOut = () => {setStartImageSrc('https://cdn-icons-png.flaticon.com/128/12280/12280747.png')};
 
-  const handleHomeMouseOver = () => {
-    setHomeImageSrc('../public/images/Dogs icons/dog-house.gif');
-  };
-  const handleHomeMouseOut = () => {
-    setHomeImageSrc('https://cdn-icons-png.flaticon.com/128/11706/11706652.png');
-  };
+  const handleHomeMouseOver = () => {setHomeImageSrc('../public/images/Dogs icons/dog-house.gif')};
+  const handleHomeMouseOut = () => {setHomeImageSrc('https://cdn-icons-png.flaticon.com/128/11706/11706652.png')};
 
-  const handleFormMouseOver = () => {
-    setFormImageSrc('https://cdn-icons-gif.flaticon.com/11706/11706661.gif');
-  };
-  const handleFormMouseOut = () => {
-    setFormImageSrc('https://cdn-icons-png.flaticon.com/128/11706/11706661.png');
-  };                
+  const handleFormMouseOver = () => {setFormImageSrc('https://cdn-icons-gif.flaticon.com/11706/11706661.gif')};
+  const handleFormMouseOut = () => {setFormImageSrc('https://cdn-icons-png.flaticon.com/128/11706/11706661.png')};      
 
+  console.log(pathname);
   return (
     <div>
       <nav className="navbar">
@@ -65,7 +55,7 @@ const Nav = ({ onSearch, temperaments, setPage, setFilterCond, filterCond, setNa
           )}
         </div>
 
-        {!pathname.includes('/detail/') && pathname !== '/form' && (
+        {pathname === '/home' && (
           <SearchBar onSearch={onSearch} temperaments={temperaments} setPage={setPage} filterCond={filterCond} setFilterCond={setFilterCond} setName={setName} name={name}/>
         )}
       </nav>

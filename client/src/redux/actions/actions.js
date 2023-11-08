@@ -5,7 +5,9 @@ import { ADD_DOG,
     GET_TEMPERAMENTS,
     PAGINATE,
     FILTER,
-    ORDER} from "../actionTypes/actionTypes";
+    ORDER,
+    ERROR_TYPE} from "../actionTypes/actionTypes";
+
 import axios from "axios";
 
 const URL = 'http://localhost:3003/';
@@ -19,7 +21,10 @@ export const getDogs = () => {
                payload: [...dogs],
             });     
       } catch (error) {
-         throw Error(error.message)
+            return dispatch({
+                type: ERROR_TYPE, 
+                payload: error.message, 
+            });
       }
     };
 }
@@ -32,7 +37,10 @@ export const addDog = (newDog) => {
                payload: newDog,
             });     
       } catch (error) {
-         throw Error(error.message)
+            return dispatch({
+                type: ERROR_TYPE, 
+                payload: error.message, 
+            });
       }
     };
 }
@@ -45,7 +53,10 @@ export const getByName = (name) => {
                  payload: dogs,
            });     
         } catch (error) {
-           throw Error(error.message)
+            return dispatch({
+                type: ERROR_TYPE, 
+                payload: error.message, 
+            });
         }
       }; 
 }
@@ -58,7 +69,10 @@ export const deleteDog = (id) => {
                  payload: dogs,
            });     
         } catch (error) {
-           throw Error(error.message)
+            return dispatch({
+                type: ERROR_TYPE, 
+                payload: error.message, 
+            });
         }
       }; 
 }
@@ -71,7 +85,10 @@ export const getTemperaments = () => {
                payload: temp
             });     
       } catch (error) {
-         throw Error(error.message)
+            return dispatch({
+                type: ERROR_TYPE, 
+                payload: error.message, 
+            });
       }
     };
 }
@@ -94,6 +111,12 @@ export const getTemperaments = () => {
         return { 
             type: ORDER, 
             payload: order
+            }
+}
+    export const reset_error=()=>{
+        return { 
+            type: ERROR_TYPE, 
+            payload: ''
             }
 }
 
