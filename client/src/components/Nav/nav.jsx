@@ -28,7 +28,7 @@ const Nav = ({ onSearch, temperaments, setPage, setFilterCond, filterCond, setNa
             <div className="gif-container" onMouseOver={handleStartMouseOver} onMouseOut={handleStartMouseOut}>
                 <div className="gif-icon">
                     <Link to="/">
-                        <img id="home-gif-icon" src={startImageSrc} alt="Home"/>
+                        <img id="start-gif-icon" src={startImageSrc} alt="Start"/>
                         <div className="text-overlay">Start</div>
                     </Link>
                 </div>
